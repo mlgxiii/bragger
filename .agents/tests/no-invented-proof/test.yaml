@@ -1,0 +1,25 @@
+id: no-invented-proof
+title: No invented proof
+description: Numbers, customers and quotes come with their source.
+triggers:
+  path:
+    match: ["out/**/*.md"]
+  content:
+    match: '\d|"|“'
+checks:
+  - id: unsourced-claim
+    message: States a number, customer or quote without saying where it comes from.
+    fix: Add the source and date, or remove the claim.
+    smart:
+      ask: >-
+        Quote each statistic, customer claim or testimonial that gives no source or date.
+        Dates, version numbers and counts of the post's own list items are fine.
+evals:
+  - name: Unsourced adoption number
+    path: out/linkedin-post.md
+    content: Over 500 teams already trust us with their company state.
+    expect: fail
+  - name: Sourced number
+    path: out/linkedin-post.md
+    content: The repo had 89 GitHub stars on 2026-10-28, up from 19 three weeks earlier.
+    expect: pass

@@ -1,0 +1,25 @@
+id: no-hype-words
+title: No hype words
+description: Published content says what things do instead of using hype words.
+triggers:
+  path:
+    match: ["out/**/*.md"]
+checks:
+  - id: hype-word
+    message: Uses a hype word.
+    fix: Replace it with what the product actually does.
+    fast:
+      match: '(?i:\b(revolutionary|seamless(ly)?|powerful|game[- ]changer|cutting[- ]edge|unlock(s|ing)?|supercharge[sd]?|ai[- ]powered)\b)'
+evals:
+  - name: Hype word
+    path: out/linkedin-post.md
+    content: Our revolutionary platform changes everything.
+    expect: fail
+  - name: Plain words
+    path: out/linkedin-post.md
+    content: Agents propose changes; a person approves them.
+    expect: pass
+  - name: Not published content
+    path: brand/voice.md
+    content: Never say revolutionary.
+    expect: skip

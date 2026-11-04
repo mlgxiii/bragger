@@ -1,0 +1,23 @@
+id: no-savings-pitch
+title: Growth, not savings
+description: Content pitches what becomes possible, not what gets cheaper.
+triggers:
+  path:
+    match: ["out/**/*.md"]
+checks:
+  - id: savings-pitch
+    message: Pitches savings (cost, tokens, time) as the main benefit.
+    fix: Say what the reader can now do that they could not before.
+    fast:
+      maybe: '(?i:\b(cost|cheap|sav(e|es|ing|ings)|tokens?|optimi[sz]e|efficien\w*|time)\b)'
+    smart:
+      ask: "Quote each sentence that pitches saving money, tokens or time as the main benefit."
+evals:
+  - name: Token savings pitch
+    path: out/x-post.md
+    content: Our tool cuts your token bill by 60%. Save money on every agent call.
+    expect: fail
+  - name: No savings words at all
+    path: out/x-post.md
+    content: Agents propose changes. A person approves them.
+    expect: pass
